@@ -106,31 +106,6 @@ def afinador(img):
     return img
 
 
-def teste():
-    i=1 
-    j=1
-    pts = np.zeros((9,2),dtype=int)
-    pts[0][0]=i
-    pts[0][1]=j
-    pts[1][0]=i-1
-    pts[1][1]=j
-    pts[2][0]=i-1
-    pts[2][1]=j+1
-    pts[3][0]=i
-    pts[3][1]=j+1
-    pts[4][0]=i+1
-    pts[4][1]=j+1
-    pts[5][0]=i+1
-    pts[5][1]=j
-    pts[6][0]=i+1
-    pts[6][1]=j-1
-    pts[7][0]=i
-    pts[7][1]=j-1
-    pts[8][0]=i-1
-    pts[8][1]=j-1
-    
-    print(pts)
-
 img= cv2.imread("letraA.png")
 imgPreta=PB(img)
 cv2.imshow("preta",imgPreta)
