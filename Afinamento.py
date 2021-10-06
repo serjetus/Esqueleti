@@ -3,13 +3,17 @@ import numpy as np
 
 def conectividade(img,pts):
     #transições  de branco para preto, nos pixels que circundam o pixel central precisa ser 1
-    cont=0
-    for p in range(1,8,1):
-        if(img[pts[p][0]][pts[p][1]]>127 and img[pts[p+1][0]][pts[p+1][1]]<127):
+    cont=0  
+    for j in range(1,8,1):
+        if(img[pts[j][0]][pts[j][1]]>127 and img[pts[j+1][0]][pts[j+1][1]]<127):
             cont+=1
+    
+    if(img[pts[8][0]][pts[8][1]]>127 and img[pts[1][0]][pts[1][1]]<127):
+        cont+=1
     if(cont == 1):
         return True
     return False
+
 
 def PixelsPretos(img,pts):
     #numeros de pixels pretos vizinhos >=2 <=6
@@ -29,13 +33,13 @@ def BrancoCima(img,pts):
 
 def BrancoEsquerda(img,pts):
     #Ao  menos  um  dos  I(i-1,j),  I(i+1,j)  e  I(i,  j-1)  são  fundo
-    if(img[pts[1][0]] [pts[1][1]]<127 or img[pts[5][0]][pts[5][1]]<127 or img[pts[7][0]][pts[7][1]]<127):
+    if(img[pts[1][0]][pts[1][1]]>127 or img[pts[5][0]][pts[5][1]]>127 or img[pts[7][0]][pts[7][1]]>127):
         return True
     return False
     
 def BrancoDireita(img,pts):
     #Ao  menos  um  dos  I(i-1,j),  I(i,j+1)  e  I(i+1,  j)  são  fundo
-    if(img[pts[1][0]][pts[1][1]] < 127 or img[pts[3][0]][pts[3][1]] < 127 or img[pts[5][0]][pts[5][1]] < 127 ):
+    if(img[pts[1][0]][pts[1][1]] >127 or img[pts[3][0]][pts[3][1]]>127 or img[pts[5][0]][pts[5][1]]>127):
         return True
     return False    
 
@@ -59,8 +63,6 @@ def PB(img):
                 img2[i][j] = 255
 
     return img2
-
-
 
 def afinador(img):
     linha,coluna,_ = img.shape
@@ -90,7 +92,7 @@ def afinador(img):
                 pts[7][1]=j-1
                 pts[8][0]=i-1
                 pts[8][1]=j-1
-                if(img[i][j]<127):
+                if(img[i][j]<127):  
                     if(conectividade(img,pts) and PixelsPretos(img,pts)):
                         if(flag):
                             if(BrancoCima(img,pts) and BrancoEsquerda(img,pts)):
@@ -106,12 +108,9 @@ def afinador(img):
     return img
 
 
-img= cv2.imread("letraA.png")
+img= cv2.imread("letraforma.jpg")
 imgPreta=PB(img)
 cv2.imshow("preta",imgPreta)
 cv2.imshow("afinador",afinador(imgPreta))
-cv2.waitKey(0)
 
-        
-        
-        
+cv2.waitKey(0)
